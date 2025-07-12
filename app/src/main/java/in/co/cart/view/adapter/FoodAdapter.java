@@ -69,10 +69,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             Glide.with(holder.itemView.getContext())
                     .load(imageUrl)
                     .placeholder(R.drawable.fastfood)
-                    .error(R.drawable.fastfood)
+                    .error(R.drawable.pvr)
                     .into(holder.binding.itemImage);
         } else {
-            holder.binding.itemImage.setImageResource(R.drawable.ic_launcher_foreground);
+            holder.binding.itemImage.setImageResource(R.drawable.ic_error);
         }
 
 
