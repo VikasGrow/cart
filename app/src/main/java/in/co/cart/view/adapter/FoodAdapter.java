@@ -175,46 +175,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
 
-//    public void syncCartItems(List<FoodItem> updatedCart) {
-//        for (FoodItem localItem : itemList) {
-//            boolean found = false;
-//            for (FoodItem cartItem : updatedCart) {
-//                if (localItem.getItemId().equals(cartItem.getItemId())) {
-//                    localItem.setQuantity(cartItem.getQuantity());
-//                    localItem.setSelectedAddOnItem(cartItem.getSelectedAddOnItem());
-//                    found = true;
-//                    break;
-//                }
-//            }
-//            if (!found) {
-//                localItem.setQuantity(0);
-//                localItem.setSelectedAddOnItem(null);
-//            }
-//        }
-//        notifyDataSetChanged();
-//    }
-//public void syncCartItems(List<FoodItem> updatedCart) {
-//    for (int i = 0; i < itemList.size(); i++) {
-//        FoodItem localItem = itemList.get(i);
-//        boolean found = false;
-//        for (FoodItem cartItem : updatedCart) {
-//            if (localItem.getItemId().equals(cartItem.getItemId())) {
-//                if (localItem.getQuantity() != cartItem.getQuantity()) {
-//                    localItem.setQuantity(cartItem.getQuantity());
-//                    localItem.setSelectedAddOnItem(cartItem.getSelectedAddOnItem());
-//                    notifyItemChanged(i); // ✅ only update this item
-//                }
-//                found = true;
-//                break;
-//            }
-//        }
-//        if (!found && localItem.getQuantity() != 0) {
-//            localItem.setQuantity(0);
-//            localItem.setSelectedAddOnItem(null);
-//            notifyItemChanged(i); // ✅ only update this item
-//        }
-//    }
-//}
 public void syncCartItems(List<FoodItem> updatedCart) {
     if (updatedCart == null) return;
 
