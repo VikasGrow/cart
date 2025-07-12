@@ -1,6 +1,7 @@
 package in.co.cart.view.adapter;
 
 import in.co.cart.BuildConfig;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
             Glide.with(holder.itemView.getContext())
                     .load(imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontAnimate()
                     .placeholder(R.drawable.fastfood)
                     .error(R.drawable.pvr)
                     .into(holder.binding.itemImage);
@@ -169,6 +173,76 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             this.binding = binding;
         }
     }
+
+
+//    public void syncCartItems(List<FoodItem> updatedCart) {
+//        for (FoodItem localItem : itemList) {
+//            boolean found = false;
+//            for (FoodItem cartItem : updatedCart) {
+//                if (localItem.getItemId().equals(cartItem.getItemId())) {
+//                    localItem.setQuantity(cartItem.getQuantity());
+//                    localItem.setSelectedAddOnItem(cartItem.getSelectedAddOnItem());
+//                    found = true;
+//                    break;
+//                }
+//            }
+//            if (!found) {
+//                localItem.setQuantity(0);
+//                localItem.setSelectedAddOnItem(null);
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
+//public void syncCartItems(List<FoodItem> updatedCart) {
+//    for (int i = 0; i < itemList.size(); i++) {
+//        FoodItem localItem = itemList.get(i);
+//        boolean found = false;
+//        for (FoodItem cartItem : updatedCart) {
+//            if (localItem.getItemId().equals(cartItem.getItemId())) {
+//                if (localItem.getQuantity() != cartItem.getQuantity()) {
+//                    localItem.setQuantity(cartItem.getQuantity());
+//                    localItem.setSelectedAddOnItem(cartItem.getSelectedAddOnItem());
+//                    notifyItemChanged(i); // ✅ only update this item
+//                }
+//                found = true;
+//                break;
+//            }
+//        }
+//        if (!found && localItem.getQuantity() != 0) {
+//            localItem.setQuantity(0);
+//            localItem.setSelectedAddOnItem(null);
+//            notifyItemChanged(i); // ✅ only update this item
+//        }
+//    }
+//}
+public void syncCartItems(List<FoodItem> updatedCart) {
+    if (updatedCart == null) return;
+
+    for (FoodItem updated : updatedCart) {
+        for (FoodItem local : itemList) {
+            if (local.getItemId().equals(updated.getItemId())) {
+                local.setQuantity(updated.getQuantity());
+                local.setSelectedAddOnItem(updated.getSelectedAddOnItem());
+
+                // Optionally update addon quantities if needed
+                if (local.getAddOnItems() != null && updated.getAddOnItems() != null) {
+                    for (AddOnItem localAddOn : local.getAddOnItems()) {
+                        for (AddOnItem updatedAddOn : updated.getAddOnItems()) {
+                            if (localAddOn.getAddonItemId().equals(updatedAddOn.getAddonItemId())) {
+                                localAddOn.setQuantity(updatedAddOn.getQuantity());
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    notifyDataSetChanged();
+}
 
 
 }

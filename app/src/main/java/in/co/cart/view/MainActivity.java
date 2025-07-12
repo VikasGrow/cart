@@ -280,6 +280,10 @@ public class MainActivity extends AppCompatActivity implements CartManager.OnCar
             binding.cartItemCount.setText(totalQty + " item" + (totalQty > 1 ? "s" : "") + " added");
             binding.cartTotalPrice.setText("₹" + String.format("%.0f", totalPrice));
         }
+        // Sync all adapters with latest cart data
+        if (foodAdapter != null) foodAdapter.syncCartItems(updatedCart);
+        if (recommendedAdapter != null) recommendedAdapter.syncCartItems(updatedCart);
+        if (repeatAdapter != null) repeatAdapter.syncCartItems(updatedCart);
     }
 
 
